@@ -18,7 +18,7 @@ Max = V(qstar).*ones(nq,cq);
 K = kappa.*ones(nq,cq);
 Val = zeros(nq,cq); 
 
-for cols=1:cq
+parfor cols=1:cq
     Val(:,cols)= V(qval(:,cols));
 end
 

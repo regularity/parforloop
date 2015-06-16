@@ -18,8 +18,11 @@ fid      = fopen('Output.txt','w');
 filename = ['mats/Results_', datestr(date), '.mat'] ; 
 
 % Add COMPECON toolbox
-cepath='C:\Users\stevensl\Dropbox\Active\common_codes\compecon\';
+cepath='C:\My Computer\G-Dropbox\Dropbox\DunRA\RA6_parcode\labor1_ic_par\compecon\';
 path([cepath 'CEtools'],path); path([cepath 'CEdemos'],path)
+
+% Setup Parfor Pool that connects to 4 nodes
+myPool = parpool(4);
 
 % -------------------------------------------------------------------------
 % Run baseline
@@ -97,7 +100,7 @@ set(0,'DefaultAxesLineStyleOrder',{'-','--','-.',':','-o','-*'})
 fig_hazard_thetas = figure; 
 hold all 
 
-for ii = 1:length(range_theta)
+parfor ii = 1:length(range_theta)
     
     plot(z, L_g{ii+1}(z,lbar_g{ii+1}, vc_g{ii+1}, zstar_g{ii+1})) ; % ,plot_style{ii}) ;  % ii+1 because RUN = 1 is the baseline parameterization 
     leg_text_thetas{ii} = ['$\theta = $',num2str(theta_g{ii+1})]; 
@@ -163,7 +166,7 @@ end
 fig_hazard_kappas = figure; 
 hold all 
 
-for ii = 1:length(range_kappa)
+parfor ii = 1:length(range_kappa)
     
     plot(z, L_g{end-ii+1}(z,lbar_g{end-ii+1}, vc_g{end-ii+1}, zstar_g{end-ii+1})) ;  % ii+1 because RUN = 1 is the baseline parameterization 
     leg_text_kappas{ii} = ['$\kappa = $',num2str(kappa_g{end-ii+1})]; 
